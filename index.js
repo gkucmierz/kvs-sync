@@ -2,7 +2,8 @@ const fs = require('fs');
 
 const config = {
   dataDir: './data',
-  dataFile: 'store.json'
+  dataFile: 'store.json',
+  prettyPrint: false
 };
 
 let data;
@@ -24,7 +25,7 @@ function saveData() {
   if (!data) return false;
   if (saved) return false;
   createDataDir();
-  let rawData = JSON.stringify(data, null, '  ');
+  let rawData = config.prettyPrint ? JSON.stringify(data, null, '  ') : JSON.stringify(data);
   fs.writeFileSync([config.dataDir, config.dataFile].join('/'), rawData, 'utf8');
   saved = true;
   process.nextTick(() => saved = false);
