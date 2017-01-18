@@ -3,7 +3,10 @@ const fs = require('fs');
 const config = {
   dataDir: './data',
   dataFile: 'store.json',
-  prettyPrint: false
+  // keep store file in user-friendly format
+  prettyPrint: false,
+  // save file on every update
+  instantSave: false
 };
 
 let data;
@@ -21,9 +24,9 @@ function readData() {
   data = JSON.parse(rawData) || {};
 }
 
-function saveData() {
+function saveData(force = false) {
   if (!data) return false;
-  if (saved) return false;
+  if (saved && !force) return false;
   createDataDir();
   let rawData = config.prettyPrint ? JSON.stringify(data, null, '  ') : JSON.stringify(data);
   fs.writeFileSync([config.dataDir, config.dataFile].join('/'), rawData, 'utf8');
@@ -61,15 +64,18 @@ exports.get = function(key) {
 exports.set = function(key, value) {
   if (!data) readData();
   data[key] = value;
+  if (config.instantSave) saveData(true);
 };
 
 exports.del = function(key) {
   if (!data) readData();
   delete data[key];
+  if (config.instantSave) saveData(true);
 }
 
 exports.clean = function() {
   data = {};
+  if (config.instantSave) saveData(true);
 }
 
 exports.keys = function() {
