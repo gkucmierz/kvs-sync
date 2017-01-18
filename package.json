@@ -6,6 +6,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Grzegorz Kućmierz",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gkucmierz/kvs-sync.git"
+  },
   "license": "MIT",
   "keywords": [
     "sync",
