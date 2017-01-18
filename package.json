@@ -1,5 +1,5 @@
 {
-  "name": "sync-kvs",
+  "name": "kvs-sync",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
